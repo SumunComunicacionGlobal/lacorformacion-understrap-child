@@ -9373,9 +9373,12 @@ label {
   font-size: 0.875rem;
   width: 100%;
 }
-.wpcf7 .wpcf7-response-output {
+.wpcf7 form .wpcf7-response-output {
   height: auto !important;
   color: #1a1a1a;
+  background-color: #f2f2f2;
+  padding: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(10, 11, 11, 0.15);
 }
 .wpcf7 .form-control-sm {
   height: auto;

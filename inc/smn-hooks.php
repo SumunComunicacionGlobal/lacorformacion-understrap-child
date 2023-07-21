@@ -231,6 +231,34 @@ function smn_single_term_title( $title ) {
 
 }
 
+function get_categorias_hijas( $parent_term_id = 55 ) {
+    
+    $cat_args = array(
+        'taxonomy'   => 'product_cat',
+        'orderby'    => 'name',
+        'order'      => 'ASC',
+        'hide_empty' => false,
+        'parent'     => $parent_term_id,
+        'fields'     => 'ids',
+    );
+
+    $child_categories = get_terms($cat_args);
+    $child_categories[] = $parent_term_id;
+
+    return $child_categories;
+
+}
+
+add_action('wpcf7_init', function (){
+    wpcf7_add_form_tag( 'session_var' , 'cf7_session_variable_callback', array('name-attr' => true) );
+}); 
+function cf7_session_variable_callback($tag){
+  $tag = new WPCF7_FormTag( $tag );
+  $value = (!empty($_SESSION[$tag->name])) ? $_SESSION[$tag->name] : 'not set';
+  $output = '<input type="hidden" name="'.$tag->name.'" value="'.$value.'">';
+  return $output;
+}
+
 add_action( 'wp', 'smn_register_session' );
 function smn_register_session() {
 
@@ -241,11 +269,19 @@ function smn_register_session() {
     if(isset($_GET['origen'])) $_SESSION['origen'] = $_GET['origen'];
     if(isset($_GET['campaign'])) $_SESSION['campaign'] = $_GET['campaign'];
 
+    $categorias_subvencionadas = get_categorias_hijas(55);
 
-    if ( is_product_category( 55 ) || in_array( 55, get_ancestors( get_queried_object_id(), 'product_cat', 'taxonomy' ) ) ) {
+    if ( 
+        ( is_tax( 'product_cat' ) && in_array( get_queried_object_id(), $categorias_subvencionadas ) ) ||
+        ( is_singular('product') && has_term( $categorias_subvencionadas, 'product_cat' ) )
+    ) {
         $_SESSION['business_line'] = 4; // Curso subvencionado
     } else {
         $_SESSION['business_line'] = 1; // Por defecto
+    }
+
+    if ( is_singular('product') && has_term( 55, 'product_cat', get_the_ID() ) ) {
+        $_SESSION['business_line'] = 4; // Curso subvencionado
     }
 
     $_SESSION['curso_uno'] = '';
@@ -262,8 +298,6 @@ function wpcf7_to_lacor_crm ( $contact_form, $abort ) {
     
     if ( !in_array( $contact_form->id(), [1107, 987] ) ) return;
 
-    global $wp_query;
-
     $submission = WPCF7_Submission::get_instance();
     $posted_data = $submission->get_posted_data();
 
@@ -271,15 +305,15 @@ function wpcf7_to_lacor_crm ( $contact_form, $abort ) {
     $phone_number = $posted_data['your-phone'];
     $email = $posted_data['your-email'];
 
-    $curso_uno = $_SESSION['curso_uno'];
+
+    $origen = isset( $posted_data['origen'] ) ? trim($posted_data['origen']) : '';
+    $campaign = isset( $posted_data['campaign'] ) ? trim($posted_data['campaign']) : '';
+    $business_line = isset( $posted_data['business_line'] ) ? trim($posted_data['business_line']) : '';
+    $curso_uno = $posted_data['curso_uno'];
+
     if ( isset( $posted_data['your-categoria-curso']) ) {
         $curso_uno = implode( ', ', $posted_data['your-categoria-curso'] );
     }
-
-    // $origen = isset( $_SESSION['p'] ) ? trim($_SESSION['p']) : '';
-    $origen = isset( $_SESSION['origen'] ) ? trim($_SESSION['origen']) : '';
-    $campaign = isset( $_SESSION['campaign'] ) ? trim($_SESSION['campaign']) : '';
-    $business_line = $_SESSION['business_line'];
 
     /* adaptamos el origen al texto  */
     switch ($origen) {
@@ -310,8 +344,6 @@ function wpcf7_to_lacor_crm ( $contact_form, $abort ) {
             break;
     }
     
-    // return false;
-
     $url = 'https://crm.ordesactiva.com/index.php?-action=intro_lead';
 
     $ch = curl_init($url);

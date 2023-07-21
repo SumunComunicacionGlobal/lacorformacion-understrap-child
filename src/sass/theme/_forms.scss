@@ -12,9 +12,12 @@ label {
         width: 100%;
     }
     
-    .wpcf7-response-output {
+    form .wpcf7-response-output {
         height: auto !important;
         color: $body-color;
+        background-color: $light;
+        padding: $spacer;
+        box-shadow: $box-shadow;
     }
 
     .form-control-sm {
