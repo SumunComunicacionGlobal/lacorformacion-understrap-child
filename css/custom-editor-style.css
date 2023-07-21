@@ -1266,7 +1266,7 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
   }
 }
 
-.wp-block-cover__inner-container {
+.wp-block-cover .wp-block-cover__inner-container {
   z-index: 2;
 }
 
@@ -10078,7 +10078,7 @@ body.understrap-no-sidebar .wp-block-cover.alignwide {
   }
 }
 
-.wp-block-cover__inner-container {
+.wp-block-cover .wp-block-cover__inner-container {
   z-index: 2;
 }
 
