@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../understrap"
+		},
+		{
+			"path": "../../plugins/woocommerce/templates"
+		}
+	],
+	"settings": {}
+}

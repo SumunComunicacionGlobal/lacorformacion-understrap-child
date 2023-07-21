@@ -1,0 +1,179 @@
+@include media-breakpoint-up(sm) {
+    .container,
+    .container-fluid {
+        padding-left: $grid-gutter-width;
+        padding-right: $grid-gutter-width;
+    }
+}
+
+.mw-300 {
+    max-width: 300px;
+}
+
+.mw-400 {
+    max-width: 400px;
+}
+
+.mw-500 {
+    max-width: 500px;
+}
+
+.mw-600 {
+    max-width: 600px;
+}
+
+.mw-700 {
+    max-width: 700px;
+}
+
+.mw-800 {
+    max-width: 800px;
+}
+
+@each $breakpoint, $container-max-width in $container-max-widths {
+    .mw-#{$breakpoint} {
+      max-width: $container-max-width !important;
+    }
+}
+
+.alignnarrow,
+.rank-math-block,
+.product-seo-content-wrapper .has-2-columns {
+    max-width: map-get($container-max-widths, 'md') !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@include media-breakpoint-up(md) {
+
+    .mt-neg-200 {
+        margin-top: -200px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .mt-neg-300 {
+        margin-top: -300px;
+        position: relative;
+        z-index: 1;
+    }
+
+}
+
+#page-wrapper,
+#woocommerce-wrapper {
+    padding-top: 0;
+
+    .entry-content > .woocommerce {
+        padding-top: $grid-gutter-width;
+    }
+}
+
+#search-wrapper,
+#error-404-wrapper {
+    padding-top: 10rem;
+
+    .page-header {
+        margin-bottom: $spacer * 2;
+    }
+}
+
+.stretch-linked-block {
+    position: relative !important;
+    transition: $transition-fade;
+
+    .editorskit-block-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 90;
+    }
+
+    &:hover {
+        opacity: .7;
+
+        .wp-block-button.is-style-arrow-link .wp-block-button__link:after {
+            right: -.5rem;
+        }
+
+        .wp-block-button.is-style-arrow-link .wp-block-button__link.has-secondary-color {
+            color: $primary;
+
+            &:after {
+                background-color: $primary;
+            }
+
+        }
+
+    }
+    
+}
+
+.stretched-link {
+    color: $body-color;
+
+    &:hover {
+        text-decoration: none;
+        color: $body-color;
+    }
+}
+
+.entry-footer {
+    position: relative;
+    z-index: 2;
+}
+
+.bg-gradient-primary {
+    color: $white;
+    @include gradient-directional($primary, $indigo );
+}
+
+.bg-gradient-secondary {
+    color: $white;
+    @include gradient-directional($yellow, $secondary );
+}
+
+.card-body {
+    padding-top: $spacer * 2;
+    border-top: $card-border-width solid $card-border-color;
+}
+
+.stretch-linked-block > .card {
+
+    .card-body {
+        padding-right: calc( $spacer + 30px );
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        @include media-breakpoint-up(sm) {
+            min-height: 160px;
+        }
+    }
+
+    &:after {
+        content: "";
+        position: absolute;
+        right: $spacer;
+        bottom: $spacer;
+        width: 30px;
+        height: 30px;
+        mask-image: url('../img/flecha-derecha.svg');
+        mask-repeat: no-repeat;
+        mask-position: center;
+        background-color: $white;
+    }
+
+}
+
+.card-dark {
+    background-color: $primary;
+    border-color: $white;
+
+    *,
+    *:hover {
+        color: $white;
+    }
+}

@@ -1,0 +1,38 @@
+#wrapper-prefooter {
+	border-top: 1px solid $border-color;
+}
+
+#wrapper-footer-full {
+	background-color: $white;
+	border-top: 1px solid $border-color;
+
+	@include media-breakpoint-down(sm) {
+		.wp-block-button,
+		.wp-block-button__link {
+			width: 100%;
+		}
+	}
+
+	.smn-has-icon:before {
+		background-color: $dark;
+	}
+
+	a:not(.wp-block-button__link) {
+		color: $indigo;
+	}
+}
+
+#wrapper-footer {
+	font-size: $font-size-sm;
+	border-top: 1px solid $border-color;
+	margin-bottom: $grid-gutter-width;
+}
+
+#wrapper-logos {
+
+	@include media-breakpoint-down(md) {
+		.wp-block-image {
+			flex-basis: 30%;
+		}
+	}
+}

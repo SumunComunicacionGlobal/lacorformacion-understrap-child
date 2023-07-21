@@ -1,0 +1,44 @@
+.hfeed {
+
+    article {
+        margin-bottom: $spacer * 3;
+
+		.wp-post-image:not(.card-img-top) {
+			margin-bottom: $spacer;
+		}
+    }
+}
+
+.post-navigation {
+	margin-top: $spacer * 2;
+
+	.nav-links {
+		font-weight: $font-weight-bold;
+	}
+
+}
+
+.pagination {
+
+
+	
+}
+
+.woocommerce nav.woocommerce-pagination ul.page-numbers {
+	border: 0;
+	margin-bottom: $spacer*2;
+	@extend .pagination;
+
+	> li {
+		@extend .page-item;
+	}
+
+	.page-numbers {
+		@extend .page-link;
+
+		&.current {
+			background-color: $primary;
+			border-color: $primary;
+		}
+	}
+}

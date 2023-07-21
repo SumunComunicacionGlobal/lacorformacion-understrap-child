@@ -1,0 +1,24 @@
+.breadcrumb {
+    @extend .alignfull;
+    // margin-bottom: $spacer * 3 !important;
+
+    .breadcrumb-inner {
+        @include make-container();
+        @include make-container-max-widths();
+    }
+
+    p {
+        margin-bottom: 0;
+        color: $white;
+        font-family: $headings-font-family;
+        text-transform: uppercase;
+
+        span.last {
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    a {
+        color: $white;
+    }
+}

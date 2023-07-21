@@ -1,0 +1,44 @@
+// Local font example
+
+@font-face {
+    font-family: 'Unbounded';
+    src:  url('../fonts/Unbounded-Regular.woff2') format('woff2'),
+         url('../fonts/Unbounded-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Unbounded';
+    src:  url('../fonts/Unbounded-Bold.woff2') format('woff2'),
+         url('../fonts/Unbounded-Bold.ttf') format('ttf');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Albert Sans';
+    src:  url('../fonts/AlbertSans-Regular.woff2') format('woff2'),
+        url('../fonts/AlbertSans-Regular.otf') format('otf'),
+        url('../fonts/AlbertSans-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Albert Sans';
+    src:  url('../fonts/AlbertSans-Bold.woff2') format('woff2'),
+        url('../fonts/AlbertSans-Bold.otf') format('otf'),
+        url('../fonts/AlbertSans-Bold.ttf') format('ttf');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Albert Sans';
+    src:  url('../fonts/AlbertSans-SemiBold.woff2') format('woff2'),
+        url('../fonts/AlbertSans-SemiBold.otf') format('otf'),
+        url('../fonts/AlbertSans-SemiBold.ttf') format('ttf');
+    font-weight: 500;
+    font-style: normal;
+}
