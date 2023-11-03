@@ -12,7 +12,8 @@ get_header();
 $container = get_theme_mod( 'understrap_container_type' );
 ?>
 
-<?php get_template_part( 'global-templates/image-header' ); ?>
+<?php // get_template_part( 'global-templates/image-header' ); ?>
+<?php smn_breadcrumb(); ?>
 
 <div class="wrapper" id="single-wrapper">
 
@@ -28,6 +29,8 @@ $container = get_theme_mod( 'understrap_container_type' );
 				<?php
 				while ( have_posts() ) {
 					the_post();
+					the_post_thumbnail( 'large', array('class' => 'mb-3 d-block' ) );
+					the_title( '<h1 class="entry-title h3">', '</h1>' );
 					get_template_part( 'loop-templates/content-single', get_post_type() );
 					// understrap_post_nav();
 

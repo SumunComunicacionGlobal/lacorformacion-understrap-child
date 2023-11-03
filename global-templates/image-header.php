@@ -35,7 +35,7 @@ if ( is_singular() ) {
 
 		<?php } ?>
 
-		<h1 class="entry-title"><?php echo $title; ?></h1>
+		<h1 class="entry-title h3"><?php echo $title; ?></h1>
 
 		<?php if ( $description) { ?>
 			

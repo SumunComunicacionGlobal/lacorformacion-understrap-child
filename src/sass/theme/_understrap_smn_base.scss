@@ -37,7 +37,7 @@ html {
 
 .back-to-top {
 	position: fixed;
-	right: $spacer;
+	right: $spacer*3;
 	bottom: -40px;
 	width: 40px;
 	height: 40px;
@@ -61,5 +61,5 @@ html {
 
 .scrolled .back-to-top {
 	opacity: .9;
-	bottom: $spacer;
+	bottom: 5.5rem;
 }

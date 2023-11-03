@@ -48,6 +48,12 @@ jQuery(document).ready(function($) {
     $(this).parent().parent().toggleClass('show');
   });
 
+  $('.solonumeros').on('textInput', e => {
+    var keyCode = e.originalEvent.data.charCodeAt(0);
+    if (String.fromCharCode(keyCode).match(/[^0-9]/g))
+        return false;  
+  });
+
 });
 
 
@@ -63,6 +69,15 @@ jQuery( '.slick-slider' ).slick({
   slidesToScroll: 1,
   autoplay: true
 });
+
+// jQuery('.slick-anchors').slick({
+//   dots: true,
+//   infinite: false,
+//   speed: 300,
+//   slidesToShow: 1,
+//   centerMode: true,
+//   variableWidth: true
+// });
 
 // jQuery('.slick-carousel, .wp-block-group.is-style-slick-carousel > .wp-block-group__inner-container, .wp-block-gallery.is-style-slick-carousel').slick({
 //   dots: false,

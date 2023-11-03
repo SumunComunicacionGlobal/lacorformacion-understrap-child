@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 
 // Set the content width based on the theme's design and stylesheet.
 if ( ! isset( $content_width ) ) {
-	$content_width = 640; /* pixels */
+	$content_width = 1380; /* pixels */
 }
 
 add_action( 'after_setup_theme', 'smn_setup' );

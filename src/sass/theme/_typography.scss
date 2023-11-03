@@ -265,6 +265,17 @@ blockquote,
     
 }
 
+body.single-post {
+
+    h2 {
+        font-size: $font-size-base* 1.75;
+    }
+
+    h3 {
+        font-size: $font-size-base* 1.5;
+    }
+}
+
 #search-wrapper,
 #error-404-wrapper {
 

@@ -252,44 +252,65 @@ function get_categorias_hijas( $parent_term_id = 55 ) {
 add_action('wpcf7_init', function (){
     wpcf7_add_form_tag( 'session_var' , 'cf7_session_variable_callback', array('name-attr' => true) );
 }); 
-function cf7_session_variable_callback($tag){
-  $tag = new WPCF7_FormTag( $tag );
-  $value = (!empty($_SESSION[$tag->name])) ? $_SESSION[$tag->name] : 'not set';
-  $output = '<input type="hidden" name="'.$tag->name.'" value="'.$value.'">';
-  return $output;
+
+function cf7_session_variable_callback($tag){ 
+
+
+    $tag = new WPCF7_FormTag( $tag );
+
+    $value = 'not set';
+
+    if ( $tag->name == 'business_line' ) {
+
+        $categorias_subvencionadas = get_categorias_hijas(55);
+        
+        if ( 
+            ( is_tax( 'product_cat' ) && in_array( get_queried_object_id(), $categorias_subvencionadas ) ) ||
+            ( is_singular('product') && has_term( $categorias_subvencionadas, 'product_cat' ) )
+        ) {
+            $value = 4; // Categoría subvencionada
+        } else {
+            $value = 1; // Por defecto
+        }
+
+        if ( is_singular('product') && has_term( 55, 'product_cat', get_the_ID() ) ) {
+            $value = 4; // Curso subvencionado
+        }
+
+    } elseif( $tag->name == 'curso_uno' ) {
+
+        $value = '';
+
+        if ( is_product_category() ) {
+            $value = get_queried_object()->name;
+        } elseif ( is_singular( 'product' ) ) {
+            $value = get_queried_object()->post_title;
+        }
+
+    } else {
+
+        if ( isset($_GET[$tag->name]) ) {
+            $value = $_GET[$tag->name];
+        } elseif ( isset($_COOKIE[$tag->name]) ) {
+            $value = $_COOKIE[$tag->name];
+        }
+
+    }
+
+    $output = '<input type="hidden" name="'.$tag->name.'" value="'.$value.'">';
+    return $output;
 }
 
 add_action( 'wp', 'smn_register_session' );
 function smn_register_session() {
 
-    if ( !session_id() ) {
-        session_start();
+    $expiration_time = time()+60*60*24*14; // 2 semanas
+
+    if(isset($_GET['origen'])) {
+        setcookie( 'origen', $_GET['origen'], $expiration_time, COOKIEPATH, COOKIE_DOMAIN );
     }
-
-    if(isset($_GET['origen'])) $_SESSION['origen'] = $_GET['origen'];
-    if(isset($_GET['campaign'])) $_SESSION['campaign'] = $_GET['campaign'];
-
-    $categorias_subvencionadas = get_categorias_hijas(55);
-
-    if ( 
-        ( is_tax( 'product_cat' ) && in_array( get_queried_object_id(), $categorias_subvencionadas ) ) ||
-        ( is_singular('product') && has_term( $categorias_subvencionadas, 'product_cat' ) )
-    ) {
-        $_SESSION['business_line'] = 4; // Curso subvencionado
-    } else {
-        $_SESSION['business_line'] = 1; // Por defecto
-    }
-
-    if ( is_singular('product') && has_term( 55, 'product_cat', get_the_ID() ) ) {
-        $_SESSION['business_line'] = 4; // Curso subvencionado
-    }
-
-    $_SESSION['curso_uno'] = '';
-
-    if ( is_product_category() ) {
-        $_SESSION['curso_uno'] = get_queried_object()->name;
-    } elseif ( is_singular( 'product' ) ) {
-        $_SESSION['curso_uno'] = get_queried_object()->post_title;
+    if(isset($_GET['campaign'])) {
+        setcookie( 'campaign', $_GET['campaign'], $expiration_time, COOKIEPATH, COOKIE_DOMAIN );
     }
 
 }
@@ -372,3 +393,31 @@ function wpcf7_to_lacor_crm ( $contact_form, $abort ) {
 }
 
 add_action( 'wpcf7_before_send_mail', 'wpcf7_to_lacor_crm', 10, 2);
+
+function cmplz_show_banner_on_click() {
+	?>
+	<script>
+        function addEvent(event, selector, callback, context) {
+            document.addEventListener(event, e => {
+                if ( e.target.closest(selector) ) {
+                    callback(e);
+                }
+            });
+        }
+        addEvent('click', '.cmplz-show-banner', function(){
+            document.querySelectorAll('.cmplz-manage-consent').forEach(obj => {
+                obj.click();
+            });
+        });
+	</script>
+	<?php
+}
+add_action( 'wp_footer', 'cmplz_show_banner_on_click' );
+
+// Excluir los post sticky en el loop principal
+function exclude_sticky_posts_from_top($query) {
+    if (is_home() && $query->is_main_query()) {
+        $query->set('ignore_sticky_posts', 1);
+    }
+}
+add_action('pre_get_posts', 'exclude_sticky_posts_from_top');

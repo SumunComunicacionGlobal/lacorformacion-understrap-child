@@ -23,6 +23,8 @@ $container = get_theme_mod( 'understrap_container_type' );
 	<?php get_template_part( 'global-templates/hero' ); ?>
 <?php endif; ?>
 
+<?php smn_breadcrumb(); ?>
+
 <div class="wrapper" id="index-wrapper">
 
 	<div class="<?php echo esc_attr( $container ); ?>" id="content" tabindex="-1">
@@ -41,6 +43,8 @@ $container = get_theme_mod( 'understrap_container_type' );
 					?>
 
 					<div class="entry-content">
+
+						<h1 class="text-center col-xs-12 mb-2"><?php echo get_the_title( $page_id ); ?></h1>
 
 						<?php echo apply_filters( 'the_content', $page_for_posts->post_content ); ?>
 
@@ -64,7 +68,7 @@ $container = get_theme_mod( 'understrap_container_type' );
 						 * If you want to override this in a child theme, then include a file
 						 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
 						 */
-						get_template_part( 'loop-templates/content', get_post_format() );
+						get_template_part( 'loop-templates/content', 'post-card' );
 					}
 				} else {
 					get_template_part( 'loop-templates/content', 'none' );

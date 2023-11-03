@@ -32,14 +32,18 @@ defined( 'ABSPATH' ) || exit;
 
 	</header><!-- .entry-header -->
 
-	<div class="entry-content">
+	<?php if ( !isset( $args['hide_excerpt'] ) || $args['hide_excerpt'] != 1 ) { ?>
 
-		<?php
-		the_excerpt();
-		understrap_link_pages();
-		?>
+		<div class="entry-content">
 
-	</div><!-- .entry-content -->
+			<?php
+			the_excerpt();
+			understrap_link_pages();
+			?>
+
+		</div><!-- .entry-content -->
+
+	<?php } ?>
 
 	<footer class="entry-footer">
 

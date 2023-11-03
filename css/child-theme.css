@@ -8109,7 +8109,7 @@ html {
 
 .back-to-top {
   position: fixed;
-  right: 1rem;
+  right: 3rem;
   bottom: -40px;
   width: 40px;
   height: 40px;
@@ -8132,7 +8132,7 @@ html {
 
 .scrolled .back-to-top {
   opacity: 0.9;
-  bottom: 1rem;
+  bottom: 5.5rem;
 }
 
 @media (min-width: 600px) {
@@ -8146,6 +8146,13 @@ html {
     padding-right: 32px;
   }
 }
+#content {
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .mw-300 {
   max-width: 300px;
 }
@@ -8288,7 +8295,13 @@ html {
 }
 @media (min-width: 600px) {
   .stretch-linked-block > .card .card-body {
-    min-height: 160px;
+    min-height: 180px;
+  }
+  .stretch-linked-block > .card .card-img-top, .stretch-linked-block > .card .product > .card img, .product > .card .stretch-linked-block > .card img {
+    height: 240px;
+    -o-object-fit: cover;
+    object-fit: cover;
+    overflow: hidden;
   }
 }
 .stretch-linked-block > .card:after {
@@ -8978,6 +8991,13 @@ blockquote .blockquote-name,
     font-size: 1.5rem;
   }
 }
+body.single-post h2 {
+  font-size: 1.75rem;
+}
+body.single-post h3, body.single-post .timeline-item-featured .timeline-item-title, .timeline-item-featured body.single-post .timeline-item-title {
+  font-size: 1.5rem;
+}
+
 #search-wrapper h1.page-title,
 #error-404-wrapper h1.page-title {
   font-size: 1.75rem;
@@ -9368,6 +9388,9 @@ label {
 
 .wpcf7 {
   max-width: 100% !important;
+}
+.wpcf7 a {
+  color: #ff651d !important;
 }
 .wpcf7 label {
   font-size: 0.875rem;

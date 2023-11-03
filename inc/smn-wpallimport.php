@@ -87,3 +87,9 @@ function dont_create_terms( $term_into, $tx_name ) {
 
 }
 
+# Automatizar el borrado de caché WP Rocket cada vez que se actualiza contenido a través de WP All Import
+add_action('pmxi_saved_post', function($post_id) {
+    if (function_exists('rocket_clean_post')) {
+        rocket_clean_domain();
+    }
+});

@@ -54,5 +54,37 @@ if ( $terms ) { ?>
 
 	</div>
 
-
 <?php }
+
+if ( is_home() ) {
+
+	// Consulta para obtener solo los 3 posts fijos más recientes
+	$sticky_posts_args = array(
+		'post_type'      => 'post',
+		'posts_per_page' => 3,
+		'post__in'       => get_option('sticky_posts'),
+		'ignore_sticky_posts' => 1,
+	);
+
+	$sticky_posts_query = new WP_Query($sticky_posts_args);
+
+	if ($sticky_posts_query->have_posts()) {
+		
+		echo '<div class="h4 text-center col-12 mb-3 mt-3">' . __( 'Publicaciones destacadas', 'smn' ) . '</div>';
+		
+		while ($sticky_posts_query->have_posts()) {
+			$sticky_posts_query->the_post();
+			
+			get_template_part( 'loop-templates/content', 'post-card', ['hide_excerpt' => 1 ] );
+			
+		}
+
+		// Restaurar datos originales del loop principal
+		wp_reset_postdata();
+	}
+
+	?>
+
+	<div class="h4 text-center col-xs-12 mt-3 mb-3"><?php echo __( 'Publicaciones recientes', 'smn' ); ?></div>
+
+<?php } ?>

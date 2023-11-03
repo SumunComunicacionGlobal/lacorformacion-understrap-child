@@ -401,11 +401,12 @@ add_action ( 'wp_body_open', 'woocommerce_demo_store' );
 add_filter( 'woocommerce_demo_store', 'smn_custom_woocommerce_demo_store', 10, 2 );
 function smn_custom_woocommerce_demo_store( $output, $notice ) {
 
+    if ( !is_active_sidebar( 'footer-ad' ) ) return false;
+
     if ( is_active_sidebar( 'footer-ad' ) ) :
         ob_start();
         dynamic_sidebar( 'footer-ad' );
         $footer_ad = ob_get_clean();
-        
     endif;
 
     $notice_id = md5( $notice );

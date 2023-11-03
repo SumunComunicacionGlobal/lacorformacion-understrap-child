@@ -6,6 +6,10 @@ label {
 
 .wpcf7 {
     max-width: 100% !important;
+
+    a {
+      color: $link-color !important;
+    }
     
     label {
         font-size: $font-size-sm;
