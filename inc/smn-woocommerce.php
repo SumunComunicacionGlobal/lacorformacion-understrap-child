@@ -174,7 +174,7 @@ function smn_custom_product_tabs( $tabs ) {
     $curso_tabs = array(
         'description'            => __( 'Descripción', 'smn' ),
         'objectives'            => __( 'Objetivos', 'smn' ),
-        'theoretical_contents'  => __( 'Teoría', 'smn' ),
+        'theoretical_contents'  => __( 'Contenidos', 'smn' ),
         'practical_contents'    => __( 'Práctica', 'smn' ),
     );
 

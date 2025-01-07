@@ -11,6 +11,18 @@ $args = array(
 	'posts_per_page'	=> 5
 );
 
+if ( is_singular( 'product' ) ) {
+
+	$related_ids = get_field('testimonios' );
+
+	if ( $related_ids ) {
+		$args['post__in'] = $related_ids;
+		$args['orderby'] = 'post__in';
+		$args['posts_per_page'] = -1;
+	}
+	
+}
+
 $q = new WP_Query($args);
 
 if ( $q->have_posts() ) { ?>

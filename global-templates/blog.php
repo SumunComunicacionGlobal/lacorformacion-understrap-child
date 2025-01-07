@@ -6,7 +6,8 @@ defined( 'ABSPATH' ) || exit;
 $blog_page_id = get_option( 'page_for_posts' );
 
 $args = array(
-	'posts_per_page'	=> 4
+	'posts_per_page'	=> 4,
+	'ignore_sticky_posts' => 1,
 );
 
 if ( wp_is_mobile() ) {

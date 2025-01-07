@@ -183,6 +183,54 @@ function remove_is_style_prefix( $block_content, $block ) {
     return $block_content;
 }
 
+add_filter( 'render_block', 'smn_products_block_template_override', 10, 2 );
+function smn_products_block_template_override( $block_content, $block ) {
+
+    if ( $block['blockName'] != 'woocommerce/handpicked-products' ) return $block_content;
+
+    if ( isset( $block['attrs']['products']) ) {
+
+        $products = $block['attrs']['products'];
+        $r = '';
+
+        $args = array(
+            'post_type' => 'product',
+            'post__in' => $products,
+            'posts_per_page' => -1,
+            'orderby' => 'post__in',
+        );
+
+        $q = new WP_Query( $args );
+
+        if( $q->have_posts() ) {
+            
+            $r .= '<div class="woocommerce">';
+
+                $r .= '<ul class="products columns-3">';
+
+                while( $q->have_posts() ) { $q->the_post();
+                
+                    ob_start();
+                    wc_get_template_part( 'content', 'product' );
+                    $r .= ob_get_clean();
+
+                }
+
+                $r .= '</ul>';
+            
+            $r .= '</div>';
+        }
+
+        wp_reset_postdata();
+
+        $block_content = $r;
+
+    }
+
+    return $r;
+    
+}
+
 // add_action('acf/init', 'smn_acf_blocks_init');
 // function smn_acf_blocks_init() {
 

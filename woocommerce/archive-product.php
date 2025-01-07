@@ -54,7 +54,7 @@ do_action( 'woocommerce_before_main_content' );
 
 			<div class="wp-block-buttons">
 				<div class="wp-block-button is-style-border-double">
-					<a href="#mas-info" class="btn btn-secondary"><?php echo __( 'Infórmate sin compromiso', 'smn' ); ?></a>
+					<a href="#mas-info" class="wp-block-button__link has-background has-secondary-background-color has-white-color"><?php echo __( 'Infórmate sin compromiso', 'smn' ); ?></a>
 				</div>
 			</div>
 

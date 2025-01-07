@@ -8,23 +8,28 @@ $page_for_posts_id = get_option( 'page_for_posts' );
 $ver_todo_active_class = ( is_home() ) ? 'active' : '';
 $queried_obj_id = get_queried_object_id();
 
+$texto_ver_mas = __( 'Más contenido…', 'smn' );
+if ( is_home() && !is_front_page() ) {
+	$texto_ver_mas = __( 'Ver categorías', 'smn' );
+}
+
 if ( $terms ) { ?>
 
-	<nav class="filter-navbar navbar navbar-expand-lg justify-content-center navbar-light mb-2">
+	<nav class="filter-navbar navbar navbar-expand-lgx justify-content-center navbar-light mb-2">
 
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filter-navbar-collapse" aria-controls="filter-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-label mr-1"><?php echo __( 'Por temas', 'smn' ); ?></span> <span class="navbar-toggler-icon"></span>
+		<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#filter-navbar-collapse" aria-controls="filter-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-label mr-1"><?php echo $texto_ver_mas; ?></span> <span class="navbar-toggler-icon"></span>
 		</button>
 
 		<div class="collapse navbar-collapse" id="filter-navbar-collapse">
 
-			<div class="nav navbar-nav mx-auto">
+			<div class="py-2">
+				
+				<?php get_search_form(); ?>
 
-				<?php if ( $page_for_posts_id ) { ?>
+			</div>
 
-					<a class="nav-item nav-link <?php echo $ver_todo_active_class; ?>" href="<?php echo esc_url( get_the_permalink( $page_for_posts_id ) ); ?>"><?php echo __( 'All' ); ?></a>
-
-				<?php } ?>
+			<div class="nav navbar-nav mx-auto text-center">
 
 				<?php foreach ( $terms as $term ) { 
 					$active_class = ( $queried_obj_id == $term->term_id ) ? 'active' : '';
@@ -34,25 +39,17 @@ if ( $terms ) { ?>
 
 				<?php } ?>
 
-				<a class="nav-item nav-link nav-search-button" data-toggle="collapse" href="#search-form" aria-expanded="false" aria-controls="search-form">
-					<?php echo __( 'Search' ); ?>
-				</a>
+				<?php if ( !is_home() && $page_for_posts_id ) { ?>
+
+					<a class="nav-item nav-link <?php echo $ver_todo_active_class; ?>" href="<?php echo esc_url( get_the_permalink( $page_for_posts_id ) ); ?>"><?php echo __( 'Ver todo', 'smn' ); ?></a>
+
+				<?php } ?>
 
 			</div>
 
 		</div>
 
 	</nav>
-
-	<div class="collapse" id="search-form">
-
-		<div class="pb-2">
-
-			<?php get_search_form(); ?>
-
-		</div>
-
-	</div>
 
 <?php }
 
