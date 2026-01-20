@@ -31,12 +31,16 @@ $navbar_type       = get_theme_mod( 'understrap_navbar_type', 'collapse' );
 
 		<a class="skip-link sr-only sr-only-focusable" href="#content"><?php esc_html_e( 'Skip to content', 'understrap' ); ?></a>
 
-		<?php do_action( 'smn_before_top_bar' ); ?>
+		<?php if ( !is_page_template( 'page-templates/landing.php' ) ) : ?>
 
-		<?php get_template_part( 'sidebar-templates/sidebar-top-bar' ); ?>
+			<?php do_action( 'smn_before_top_bar' ); ?>
 
-		<?php do_action( 'smn_after_top_bar' ); ?>
+			<?php get_template_part( 'sidebar-templates/sidebar-top-bar' ); ?>
 
-		<?php get_template_part( 'global-templates/navbar', $navbar_type . '-' . $bootstrap_version ); ?>
+			<?php do_action( 'smn_after_top_bar' ); ?>
+
+			<?php get_template_part( 'global-templates/navbar', $navbar_type . '-' . $bootstrap_version ); ?>
+		
+		<?php endif; ?>
 
 	</header><!-- #wrapper-navbar end -->

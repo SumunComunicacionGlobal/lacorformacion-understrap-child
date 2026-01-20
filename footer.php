@@ -11,9 +11,13 @@
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<?php get_template_part( 'sidebar-templates/sidebar', 'prefooter' ); ?>
+<?php if ( !is_page_template( 'page-templates/landing.php' ) ) :
 
-<?php get_template_part( 'sidebar-templates/sidebar', 'footerfull' ); ?>
+	get_template_part( 'sidebar-templates/sidebar', 'prefooter' );
+
+	get_template_part( 'sidebar-templates/sidebar', 'footerfull' ); 
+	
+endif; ?>
 
 <div class="container" id="footer-content">
 
@@ -59,4 +63,3 @@ defined( 'ABSPATH' ) || exit;
 </body>
 
 </html>
-

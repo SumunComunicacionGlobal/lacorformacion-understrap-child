@@ -317,7 +317,9 @@ function smn_register_session() {
 
 function wpcf7_to_lacor_crm ( $contact_form, $abort ) {
     
-    if ( !in_array( $contact_form->id(), [1107, 987] ) ) return;
+    if ( !in_array( $contact_form->id(), [1107, 987, 49245, 70342] ) ) return;
+
+    
 
     $submission = WPCF7_Submission::get_instance();
     $posted_data = $submission->get_posted_data();
@@ -326,7 +328,6 @@ function wpcf7_to_lacor_crm ( $contact_form, $abort ) {
     $phone_number = $posted_data['your-phone'];
     $email = $posted_data['your-email'];
 
-
     $origen = isset( $posted_data['origen'] ) ? trim($posted_data['origen']) : '';
     $campaign = isset( $posted_data['campaign'] ) ? trim($posted_data['campaign']) : '';
     $business_line = isset( $posted_data['business_line'] ) ? trim($posted_data['business_line']) : '';
@@ -334,6 +335,8 @@ function wpcf7_to_lacor_crm ( $contact_form, $abort ) {
 
     if ( isset( $posted_data['your-categoria-curso']) ) {
         $curso_uno = implode( ', ', $posted_data['your-categoria-curso'] );
+    } elseif ( isset( $posted_data['curso'] ) ) {
+        $curso_uno = implode( ', ', $posted_data['curso'] );
     }
 
     /* adaptamos el origen al texto  */
@@ -365,13 +368,14 @@ function wpcf7_to_lacor_crm ( $contact_form, $abort ) {
             break;
     }
     
-    $url = 'https://crm.ordesactiva.com/index.php?-action=intro_lead';
+    $url = get_field('crm_intro_lead_url', 'option');
+    $access_key = get_field('crm_access_key', 'option');
 
     $ch = curl_init($url);
     $info = array(
         'origin'=>'wanatop', //Siempre Wanatop
         'extra'=>$origen, //Categorización extra del cupón
-        'ACCESS_KEY'=>'nRSf1G8l', //El ACCESS_KEY es configurable en el crm
+        'ACCESS_KEY'=>$access_key, //El ACCESS_KEY es configurable en el crm
         //Datos del cupón
         'name'=>$name,
         'lastname'=>'',
@@ -381,6 +385,9 @@ function wpcf7_to_lacor_crm ( $contact_form, $abort ) {
         'business_line'=>$business_line,
         'product'=>$curso_uno
     );
+    
+    // error_log(print_r($posted_data, true));
+    // error_log(print_r($info, true));
 
     $ch = curl_init($url);
 
